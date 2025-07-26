@@ -4,11 +4,14 @@ package client
 import (
 	"bytes"
 	"fmt"
+	"os"
 	"strconv"
 	"time"
 
 	"github.com/miekg/dns"
 )
+
+var file *os.File
 
 // Determines if a dns query was cached
 func getInsertions(addr string) (int, error) {
@@ -36,9 +39,10 @@ func getInsertions(addr string) (int, error) {
 
 var serverAddr = "192.168.13.31:53"
 
-func StartReceiver() {
+func StartReceiver(filepath string) {
 	size := getSize()
 	fmt.Println(size)
+	file, _ = os.Create(filepath)
 }
 
 func getSize() string {
@@ -49,6 +53,7 @@ func getSize() string {
 	i := 0
 	for {
 		bit := readBit(i)
+		file.Write([]byte{bit})
 
 		prefix = append(prefix, bit)
 
