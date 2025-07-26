@@ -12,7 +12,7 @@ import (
 )
 
 var file *os.File
-
+var serverAddr string
 var DOMAIN_INDEX = 0
 
 /*
@@ -64,9 +64,8 @@ func getInsertions(addr string) (int, error) {
 	return strconv.Atoi(txt[0])
 }
 
-var serverAddr = "192.168.13.3:53"
-
-func StartReceiver(filepath string) {
+func StartReceiver(filepath, dnsIP string) {
+	serverAddr = dnsIP + ":53"
 	size_s := getSize()
 	fmt.Println(size_s)
 	size, _ := strconv.Atoi(size_s)

@@ -17,6 +17,6 @@ func main() {
 		client.StartSender(*fileIn, *dnsIP)
 	} else {
 		println("Going to receiver")
-		client.StartReceiver(*fileOut)
+		client.StartReceiver(*fileOut, *dnsIP)
 	}
 }
