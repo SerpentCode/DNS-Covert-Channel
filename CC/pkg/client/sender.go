@@ -42,6 +42,14 @@ func StartSender(filename, dnsIP string) {
 			So we have to manually send them with the below loop
 			However the rest of the data is represented as bits (1 or 0) in the byte array, but we
 			will parse it correctly when we receive it
+
+			This does SIGNIFICANTLY increase the amount of domain names required, because now
+			we are adding 8 domains to every bit of data outside the heater, which is the majority
+
+			This is easibly fixable by simply putting the below for loop outside the main loop and using it
+			to parse the header out
+
+			but I ran out of time :(
 		*/
 		for j := 7; j >= 0; j-- {
 			// Loading bit and then sending DNS accordingly
