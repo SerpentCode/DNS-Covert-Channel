@@ -34,7 +34,7 @@ func getInsertions(addr string) (int, error) {
 	return strconv.Atoi(txt[0])
 }
 
-var serverAddr = "192.168.13.31:53"
+var serverAddr = "192.168.13.3:53"
 
 func StartReceiver() {
 	size := getSize()
@@ -57,7 +57,7 @@ func getSize() string {
 		if len(window) > len(pat) {
 			window = window[1:]
 		}
-		fmt.Printf("%b", window)
+		fmt.Printf("%b\n", window)
 		if len(window) == len(pat) && bytes.Equal(window, pat) {
 			return string(prefix)
 		}
