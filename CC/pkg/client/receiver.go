@@ -125,9 +125,9 @@ func readBit() byte {
 	}
 
 	after, err := getInsertions(serverAddr)
-	if err != nil {
-		panic(err)
-	}
+	// if err != nil {
+	// 	panic(err)
+	// }
 
 	if before == after {
 		fmt.Println("✔ Cache hit detected for " + DomainList[DOMAIN_INDEX])
