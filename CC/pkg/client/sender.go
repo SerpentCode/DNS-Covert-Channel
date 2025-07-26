@@ -50,7 +50,8 @@ func StartSender() {
 			k++
 		}
 	}
-	fmt.Print("FIN SEND")
+	fmt.Println(DomainList[k])
+	fmt.Print(payload)
 }
 
 /*
