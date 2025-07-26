@@ -24,15 +24,14 @@ func StartSender() {
 
 	// Adding the header and data together
 	payload := append(size_header, file_data...)
-	fmt.Printf("Header: %08b\n", size_header)
-	fmt.Printf("First %08b\n", payload[0])
 
+	// Sending message
 	var k = 0
 	for i, chat := range payload {
-		// If bit = 1 query if not go next
 		fmt.Println("%08b", payload[i])
-
+		// Loading byte
 		for j := 7; j >= 0; j-- {
+			// Loading bit and then sending DNS accordingly
 			bit := (chat >> uint(j)) & 1
 			fmt.Println(bit)
 			if bit == 1 {
@@ -47,6 +46,7 @@ func StartSender() {
 			} else {
 				fmt.Println("Zero!")
 			}
+			// Incrementing our DNS names to send
 			k++
 		}
 	}

@@ -21,7 +21,7 @@ func init() {
 }
 
 /*
-Converts an array of bits (typed as a byte slice) to an array of bytes
+Helper: Converts an array of bits (typed as a byte slice) to an array of bytes
 */
 func bitstoBytes(bits []byte) []byte {
 	nBytes := (len(bits) + 7) / 8
@@ -38,7 +38,7 @@ func bitstoBytes(bits []byte) []byte {
 	return out
 }
 
-// Determines if a dns query was cached
+// Helper: Determines if a dns query was cached
 func getInsertions(addr string) (int, error) {
 	msg := new(dns.Msg)
 	msg.SetQuestion(dns.Fqdn("insertions.bind"), dns.TypeTXT)
@@ -83,6 +83,9 @@ func StartReceiver() {
 	}
 }
 
+/*
+Gets size of the received file, located in the header
+*/
 func getSize() string {
 	pat := []byte{0, 0, 1, 1, 1, 0, 1, 0}
 	window := make([]byte, 0, len(pat))
