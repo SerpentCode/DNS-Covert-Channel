@@ -72,7 +72,6 @@ func StartReceiver(filepath string) {
 	size, _ := strconv.Atoi(size_s)
 	data_bits := make([]byte, 0)
 	fmt.Println(size)
-	file, _ = os.Create(filepath)
 	for range (size * 8) + 1 {
 		data_bits = append(data_bits, readBit())
 		// fmt.Printf("Data: %08b", data_bits)
@@ -81,7 +80,7 @@ func StartReceiver(filepath string) {
 	data_bytes := bitstoBytes(data_bits)
 	// Doing it again because we are in a matrix
 	this_shit_weird := bitstoBytes(data_bytes)
-	if err := os.WriteFile("what.txt", this_shit_weird, 0o644); err != nil {
+	if err := os.WriteFile(filepath, this_shit_weird, 0o644); err != nil {
 		fmt.Println("killing myself")
 	}
 }
@@ -95,7 +94,6 @@ func getSize() string {
 	var prefix []byte
 	for {
 		bit := readBit()
-		file.Write([]byte{bit})
 
 		prefix = append(prefix, bit)
 
