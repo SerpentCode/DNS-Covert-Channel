@@ -13,8 +13,6 @@ import (
 
 var file *os.File
 
-var file *os.File
-
 var DOMAIN_INDEX = 0
 
 /*
