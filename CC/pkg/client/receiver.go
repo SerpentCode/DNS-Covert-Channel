@@ -16,7 +16,7 @@ var serverAddr string
 var DOMAIN_INDEX = 0
 
 /*
-Warm up cache
+Warm up DNS cache
 */
 func init() {
 	getInsertions(serverAddr)
@@ -40,7 +40,9 @@ func bitstoBytes(bits []byte) []byte {
 	return out
 }
 
-// Helper: Determines if a dns query was cached
+/*
+Helper: Determines if a dns query was cached
+*/
 func getInsertions(addr string) (int, error) {
 	msg := new(dns.Msg)
 	msg.SetQuestion(dns.Fqdn("insertions.bind"), dns.TypeTXT)
@@ -66,21 +68,26 @@ func getInsertions(addr string) (int, error) {
 
 func StartReceiver(filepath, dnsIP string) {
 	serverAddr = dnsIP + ":53"
+	// Parse size from header
 	size_s := getSize()
-	fmt.Println(size_s)
+
 	size, _ := strconv.Atoi(size_s)
 	data_bits := make([]byte, 0)
-	fmt.Println(size)
-	for range (size * 8) + 1 {
+
+	// Use the size to pull data from the DNS server by querying the cache
+	for range size * 8 {
 		data_bits = append(data_bits, readBit())
-		// fmt.Printf("Data: %08b", data_bits)
+
 	}
-	// Turning bits into bytes
+	// We receive data as 'bits' displayed in a 'byte' format, so 00000000 or 00000001, so we convert this to an array
+	// of 'bits', 1 or 0, in a byte slice
 	data_bytes := bitstoBytes(data_bits)
-	// Doing it again because we are in a matrix
+	// Now we convert our byte slice of 'bits' to actual bytes in a byte slice
 	this_shit_weird := bitstoBytes(data_bytes)
+	// Write our data to file
+	fmt.Println("Finished receiving data")
 	if err := os.WriteFile(filepath, this_shit_weird, 0o644); err != nil {
-		fmt.Println("killing myself")
+		fmt.Println("Write file error: check file path?")
 	}
 }
 
@@ -120,7 +127,7 @@ func readBit() byte {
 	_, _, err = c.Exchange(msg, serverAddr)
 
 	if err != nil {
-		fmt.Println("✘ Cache miss really detected")
+		fmt.Println("✘ Cache miss really detected for " + DomainList[DOMAIN_INDEX] + " consider increasing timeout " + err.Error())
 	}
 
 	after, err := getInsertions(serverAddr)
@@ -129,11 +136,11 @@ func readBit() byte {
 	// }
 
 	if before == after {
-		fmt.Println("✔ Cache hit detected for " + DomainList[DOMAIN_INDEX])
+		fmt.Println("\033[32m✔ Cache hit detected for " + DomainList[DOMAIN_INDEX] + "\033[0m")
 		DOMAIN_INDEX++
 		return 1
 	} else {
-		fmt.Println("✘ Cache miss detected for " + DomainList[DOMAIN_INDEX])
+		fmt.Printf("\033[31m✘ Cache miss detected for %s\n\033[0m", DomainList[DOMAIN_INDEX])
 		DOMAIN_INDEX++
 		return 0
 	}
