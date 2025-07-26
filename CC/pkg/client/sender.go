@@ -40,8 +40,10 @@ func StartSender(filename, dnsIP string) {
 		/*
 			the first couple values in payload are actually bytes, which we want to send as bits
 			So we have to manually send them with the below loop
-			However the rest of the data is represented as bits (1 or 0) in the byte array, but we
-			will parse it correctly when we receive it
+
+			However the rest of the data is represented as bits (1 or 0) in the byte array,
+			which means we are actually sending 00000000 and 00000001, not 1 or 0
+			but we will parse it correctly when we receive it (line 84-86 in receiver.go)
 
 			This does SIGNIFICANTLY increase the amount of domain names required, because now
 			we are adding 8 domains to every bit of data outside the heater, which is the majority
