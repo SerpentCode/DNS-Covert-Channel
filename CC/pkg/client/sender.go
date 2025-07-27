@@ -46,7 +46,7 @@ func StartSender(filename, dnsIP string) {
 			but we will parse it correctly when we receive it (line 84-86 in receiver.go)
 
 			This does SIGNIFICANTLY increase the amount of domain names required, because now
-			we are adding 8 domains to every bit of data outside the heater, which is the majority
+			we are adding 8 domains to every bit of data outside the header, which is the majority
 
 			This is easibly fixable by simply putting the below for loop outside the main loop and using it
 			to parse the header out

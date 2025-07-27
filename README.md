@@ -1,5 +1,8 @@
 # DNS-Covert-Channel
+Due to an implementation bug this cover channel can only support
+the transportation of 12 bytes per 1000 domain names.
 
+Domain names are currently hardcoded in, no need to supply your own
 ## Use
 
 ### Sending
