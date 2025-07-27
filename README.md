@@ -4,6 +4,7 @@ the transportation of 12 bytes per 1000 domain names.
 
 Domain names are currently hardcoded in, no need to supply your own
 ## Use
+To compile run go build -o main
 
 ### Sending
 Proper syntax is ./main --fileIn <filepath> --dns <IP>
